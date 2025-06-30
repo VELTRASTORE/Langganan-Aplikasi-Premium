@@ -4,538 +4,454 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Veltra Store</title>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Reset & Base Styles */
     * {
-      font-family: 'SF Pro Display', sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      background-color: #f0f0f0;
+      background-color: #f0f2f5;
+      color: #333;
       transition: background-color 0.3s, color 0.3s;
-    }
-    body.dark {
-      background-color: #121212;
-      color: #ffffff;
+      overflow-y: scroll; /* Mengizinkan scroll vertikal */
     }
 
+    /* Mengatasi scrollbar yang tidak diinginkan di beberapa browser */
+    body::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
+    }
+    body {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    body.dark {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+    }
+
+    /* Header */
     header {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      background: linear-gradient(to right, #4b6cb7, #182848);
-      color: white;
-      position: relative;
       flex-direction: column;
-    }
-
-    header .top-bar {
-      display: flex;
       align-items: center;
-      width: 100%;
-      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      position: relative;
     }
 
-    header img {
+    body.dark header {
+      background-color: #2a2a2a;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    header .logo-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 5px; /* Sedikit jarak ke subtext */
+    }
+
+    header .logo-section img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
       object-fit: cover;
       margin-right: 10px;
+      display: block;
     }
 
     header h1 {
       font-size: 1.5rem;
-      text-align: center;
+      font-weight: 700;
+      color: #007bff; /* Warna biru untuk "Veltra Store" */
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    body.dark header h1 {
+      color: #64b5f6; /* Biru lebih terang untuk dark mode */
     }
 
     header .subtext {
       font-size: 0.9rem;
-      margin-top: 4px;
-    }
-
-    .welcome-popup {
-      background: #ffffff;
-      color: #333;
-      padding: 10px 20px;
-      text-align: center;
-      font-weight: bold;
-      animation: fadeOut 3s forwards;
-      position: fixed;
-      top: 0;
+      color: #777;
+      margin-top: 0; /* Sesuaikan margin karena logo-section sudah ada margin-bottom */
+      display: block;
       width: 100%;
-      z-index: 1000;
-    }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { opacity: 0; display: none; }
-    }
-
-    .popup-info {
-      background-color: #fefefe;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #444;
-      animation: slideIn 0.5s ease-out;
-      margin: 1rem;
-      border-radius: 8px;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .search-bar {
-      margin: 1rem;
       text-align: center;
     }
 
-    .search-bar input {
-      padding: 6px 12px;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-    }
-
-    .product {
-      background-color: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: transform 0.2s;
-    }
-
-    body.dark .product {
-      background-color: #1e1e1e;
-      color: white;
-    }
-
-    .product:hover {
-      transform: scale(1.02);
-    }
-
-    .product img {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 10px;
-      object-fit: contain;
-    }
-
-    .product .price {
-      color: green;
-      font-weight: bold;
-    }
-
-    .order-button {
-      margin-top: 10px;
-      padding: 6px 12px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .order-button:hover {
-      background-color: #388e3c;
+    body.dark header .subtext {
+      color: #bbb;
     }
 
     .menu-button {
       background: none;
       border: none;
-      font-size: 1.5rem;
-      color: white;
+      font-size: 1.8rem;
+      color: #333;
       cursor: pointer;
+      padding: 0.5rem;
+      position: absolute;
+      right: 1.5rem;
+      top: 1rem;
+    }
+
+    body.dark .menu-button {
+      color: #f0f0f0;
     }
 
     .menu-content {
       display: none;
       position: absolute;
-      top: 60px;
-      right: 10px;
-      background-color: white;
+      top: calc(100% + 10px);
+      right: 1.5rem;
+      background-color: #ffffff;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       z-index: 10;
+      min-width: 180px;
+    }
+
+    body.dark .menu-content {
+      background-color: #3a3a3a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .menu-content a {
       display: flex;
       align-items: center;
-      padding: 10px;
+      padding: 12px 15px;
       text-decoration: none;
       color: #333;
-      font-size: 0.9rem;
+      font-size: 1rem;
+      transition: background-color 0.2s;
+    }
+
+    body.dark .menu-content a {
+      color: #f0f0f0;
     }
 
     .menu-content a img {
-      width: 18px;
-      height: 18px;
-      margin-right: 8px;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
     }
 
     .menu-content a:hover {
-      background-color: #eee;
+      background-color: #f5f5f5;
+    }
+
+    body.dark .menu-content a:hover {
+      background-color: #4a4a4a;
     }
 
     .show-menu {
       display: block;
     }
 
-    .payment-section {
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-
-    .payment-section h2 {
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-    }
-
-    .payment-methods {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .payment-methods div {
-      text-align: center;
-    }
-
-    .payment-methods img {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-      margin-bottom: 6px;
-    }
-
-    .payment-note {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #555;
-    }
-  </style>
-</head>
-<body>
-  <div class="welcome-popup">Selamat datang kak di Veltra Store!</div>
-  <header>
-    <div class="top-bar">
-      <div style="display: flex; align-items: center;">
-        <img src="https://i.postimg.cc/jDLNTZZz/animeguy.jpg" alt="anime logo">
-        <h1>Veltra Store</h1>
-      </div>
-      <button class="menu-button" onclick="toggleMenu()">⋮</button>
-    </div>
-    <div class="subtext">Premium Apps Termurah & Terpercaya 🔥</div>
-    <div class="menu-content" id="menu">
-      <a href="https://wa.me/6285166497792" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"/>Contact Person</a>
-      <a href="https://www.instagram.com/veltrastore_jasasuntiksosmed/profilecard/?igsh=MTk3d2MwajBwNW5t" target="_blank"><img src="https://img.icons8.com/fluency/48/instagram-new.png"/>Testimoni</a>
-      <a href="#" onclick="toggleDarkMode()">🌓 Dark Mode</a>
-    </div>
-  </header>
-
-  <div class="popup-info">Silahkan Pilih Produk Yang kamu Mau,Nanti Otomatis Diarahkan Ke WhatsApp Veltra Store untuk Diproses 🙏😺</div>
-
-  <div class="search-bar">
-    <input type="text" placeholder="Cari aplikasi..." onkeyup="filterProducts(this.value)" />
-  </div>
-
-  <div class="product-grid" id="productGrid"></div>
-
-  <section class="payment-section">
-    <h2>Metode Pembayaran</h2>
-    <div class="payment-methods">
-      <div>
-        <img src="https://i.postimg.cc/4nfLdpK2/gopay.png" alt="Gopay">
-        <div>Gopay</div>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veltra Store</title>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display&display=swap" rel="stylesheet">
-  <style>
-    * {
-      font-family: 'SF Pro Display', sans-serif;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background-color: #f0f0f0;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.dark {
-      background-color: #121212;
-      color: #ffffff;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      background: linear-gradient(to right, #4b6cb7, #182848);
-      color: white;
-      position: relative;
-      flex-direction: column;
-    }
-
-    header .top-bar {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      justify-content: space-between;
-    }
-
-    header img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 10px;
-    }
-
-    header h1 {
-      font-size: 1.5rem;
-      text-align: center;
-    }
-
-    header .subtext {
-      font-size: 0.9rem;
-      margin-top: 4px;
-    }
-
+    /* Welcome Popup & Info */
     .welcome-popup {
-      background: #ffffff;
-      color: #333;
-      padding: 10px 20px;
-      text-align: center;
-      font-weight: bold;
-      animation: fadeOut 3s forwards;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { opacity: 0; display: none; }
+      display: none;
     }
 
     .popup-info {
-      background-color: #fefefe;
+      background-color: #e6f7ff;
       padding: 1rem;
       text-align: center;
-      font-size: 0.9rem;
-      color: #444;
-      animation: slideIn 0.5s ease-out;
-      margin: 1rem;
+      font-size: 0.95rem;
+      color: #2196f3;
+      margin: 1rem 1.5rem;
       border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      font-weight: 500;
+      line-height: 1.4; /* Meningkatkan keterbacaan */
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    body.dark .popup-info {
+      background-color: #1e3a5f;
+      color: #90caf9;
     }
 
+    /* Search Bar */
     .search-bar {
-      margin: 1rem;
-      text-align: center;
+      margin: 1rem 1.5rem;
     }
 
     .search-bar input {
-      padding: 6px 12px;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
+      padding: 12px 20px;
+      width: 100%;
+      max-width: none;
+      border-radius: 25px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
+    .search-bar input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+
+    body.dark .search-bar input {
+      background-color: #2a2a2a;
+      border-color: #444;
+      color: #f0f0f0;
+    }
+
+    /* Product Grid */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
-      padding: 1rem;
+      padding: 1rem 1.5rem;
+      max-width: 700px;
+      margin: 0 auto;
     }
 
+    /* Product Card */
     .product {
-      background-color: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      padding: 1.2rem 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      transition: transform 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      height: 270px;
+      justify-content: space-between;
     }
 
     body.dark .product {
-      background-color: #1e1e1e;
-      color: white;
+      background-color: #2a2a2a;
+      color: #f0f0f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .product:hover {
-      transform: scale(1.02);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .product .badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: #ff5722;
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-top-right-radius: 12px;
+      border-bottom-left-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transform: translate(0, 0);
+    }
+
+    body.dark .product .badge {
+      background-color: #d84315;
     }
 
     .product img {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 10px;
+      width: 75px;
+      height: 75px;
+      margin-bottom: 0.5rem;
       object-fit: contain;
     }
 
-    .product .price {
-      color: green;
-      font-weight: bold;
+    .product .product-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #444;
+      margin-bottom: 0.5rem;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.3;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    body.dark .product .product-name {
+      color: #e0e0e0;
+    }
+
+    .product .price-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: auto;
+        width: 100%;
+        margin-bottom: 0.8rem;
+    }
+
+    .product .old-price {
+        color: #999;
+        font-size: 0.85rem;
+        text-decoration: line-through;
+        margin-bottom: 0.1rem;
+        font-weight: 400;
+    }
+
+    body.dark .product .old-price {
+        color: #888;
+    }
+
+    .product .current-price {
+      color: #e91e63;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+
+    body.dark .product .current-price {
+      color: #ff8a80;
     }
 
     .order-button {
-      margin-top: 10px;
-      padding: 6px 12px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
+        display: inline-block;
+        background-color: #28a745;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: background-color 0.2s ease;
+        border: none;
+        cursor: pointer;
+        width: 80%;
+        max-width: 150px;
+        margin-top: auto;
     }
 
     .order-button:hover {
-      background-color: #388e3c;
+        background-color: #218838;
     }
 
-    .menu-button {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: white;
-      cursor: pointer;
+    body.dark .order-button {
+      background-color: #4CAF50;
     }
 
-    .menu-content {
-      display: none;
-      position: absolute;
-      top: 60px;
-      right: 10px;
-      background-color: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 10;
+    body.dark .order-button:hover {
+      background-color: #45a049;
     }
 
-    .menu-content a {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      text-decoration: none;
-      color: #333;
-      font-size: 0.9rem;
-    }
-
-    .menu-content a img {
-      width: 18px;
-      height: 18px;
-      margin-right: 8px;
-    }
-
-    .menu-content a:hover {
-      background-color: #eee;
-    }
-
-    .show-menu {
-      display: block;
-    }
-
+    /* Payment Section */
     .payment-section {
-      padding: 2rem 1rem;
+      padding: 2rem 1.5rem;
       text-align: center;
+      background-color: #ffffff;
+      margin-top: 1.5rem;
+      border-top: 1px solid #eee;
+    }
+
+    body.dark .payment-section {
+      background-color: #2a2a2a;
+      border-top-color: #3a3a3a;
     }
 
     .payment-section h2 {
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    body.dark .payment-section h2 {
+      color: #f0f0f0;
     }
 
     .payment-methods {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 30px;
       flex-wrap: wrap;
     }
 
     .payment-methods div {
       text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    body.dark .payment-methods div {
+      color: #ccc;
     }
 
     .payment-methods img {
-      width: 60px;
-      height: 60px;
+      width: 55px;
+      height: 55px;
       object-fit: contain;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      filter: grayscale(10%);
     }
 
     .payment-note {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #555;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    body.dark .payment-note {
+      color: #bbb;
     }
   </style>
 </head>
 <body>
   <div class="welcome-popup">Selamat datang kak di Veltra Store!</div>
   <header>
-    <div class="top-bar">
-      <div style="display: flex; align-items: center;">
-        <img src="https://i.postimg.cc/jDLNTZZz/animeguy.jpg" alt="anime logo">
-        <h1>Veltra Store</h1>
-      </div>
-      <button class="menu-button" onclick="toggleMenu()">⋮</button>
+    <div class="logo-section">
+      <img src="https://i.postimg.cc/jDLNTZZz/animeguy.jpg" alt="anime logo">
+      <h1>Veltra Store</h1>
     </div>
     <div class="subtext">Premium Apps Termurah & Terpercaya 🔥</div>
+    <button class="menu-button" onclick="toggleMenu()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
     <div class="menu-content" id="menu">
       <a href="https://wa.me/6285166497792" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"/>Contact Person</a>
       <a href="https://www.instagram.com/veltrastore_jasasuntiksosmed/profilecard/?igsh=MTk3d2MwajBwNW5t" target="_blank"><img src="https://img.icons8.com/fluency/48/instagram-new.png"/>Testimoni</a>
-      <a href="#" onclick="toggleDarkMode()">🌓 Dark Mode</a>
+      <a href="#" onclick="toggleDarkMode()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        Dark Mode
+      </a>
     </div>
   </header>
-
   <div class="popup-info">Silahkan Pilih Produk Yang kamu Mau,Nanti Otomatis Diarahkan Ke WhatsApp Veltra Store untuk Diproses 🙏😺</div>
-
   <div class="search-bar">
     <input type="text" placeholder="Cari aplikasi..." onkeyup="filterProducts(this.value)" />
   </div>
-
   <div class="product-grid" id="productGrid"></div>
-
   <section class="payment-section">
     <h2>Metode Pembayaran</h2>
     <div class="payment-methods">
@@ -560,51 +476,67 @@
   </section>
 
   <script>
+    // Fungsi untuk mendapatkan angka dari string harga (misal "Rp15.000" jadi 15000)
+    function getNumericPrice(priceString) {
+        return parseInt(priceString.replace(/[^0-9]/g, ''), 10);
+    }
+
+    // Fungsi untuk memformat angka kembali ke string harga (misal 15000 jadi "Rp15.000")
+    function formatPrice(numericPrice) {
+        return 'Rp' + numericPrice.toLocaleString('id-ID');
+    }
+
     const products = [
-      { name: "NETFLIX 1P1U - 1 BULAN", price: "Rp43.000", img: "https://i.postimg.cc/H8JQWztc/netflix.png" },
-      { name: "CANVA PRO - 1 TAHUN (INVITE)", price: "Rp15.000", img: "https://i.postimg.cc/yJt64TWr/canva.png" },
-      { name: "GEMINI AI + GDRIVE 2TB + VEO3 - 15 BULAN (PRIVATE)", price: "Rp35.000", img: "https://i.postimg.cc/Y2LkKH7p/gemini.png" },
-{ name: "VPN HMA - 1 BULAN (SHARING)", price: "Rp15.000", img: "https://i.postimg.cc/43xhs7c5/hma.png" },
-{ name: "VPN HMA - 1 BULAN (PRIVATE)", price: "Rp25.000", img: "https://i.postimg.cc/43xhs7c5/hma.png" },
-{ name: "VPN EXPRESS - 1 BULAN (SHARING)", price: "Rp17.000", img: "https://i.postimg.cc/3x2vN6Ff/expressvpn.png" },
-      { name: "SPOTIFY PREMIUM STUDENT - 1 BULAN (PRIVATE)", price: "Rp34.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
-      { name: "CAPCUT - 1 BULAN (PRIVATE)", price: "Rp28.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
-      { name: "CHATGPT PLUS 4.0 - 1 BULAN (PRIVATE)", price: "Rp25.000", img: "https://i.postimg.cc/2VFsFxYN/chatgpt.png" },
-      { name: "CAPCUT - 1 BULAN (SHARING)", price: "Rp20.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
-      { name: "CHATGPT PLUS 4.0 - 1 BULAN (SHARING)", price: "Rp20.000", img: "https://i.postimg.cc/2VFsFxYN/chatgpt.png" },
-      { name: "SPOTIFY PREMIUM - 1 BULAN (PRIVATE)", price: "Rp25.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
-      { name: "RCTI+ SPORTS", price: "Rp30.000", img: "https://i.postimg.cc/cK6PWynd/rcti.png" },
-      { name: "VIU PREMIUM - 1 TAHUN (PRIVATE)", price: "Rp12.000", img: "https://i.postimg.cc/V0LzXZhv/viu.png" },
-      { name: "SPOTIFY PREMIUM - 2 BULAN (PRIVATE)", price: "Rp40.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
-      { name: "CAPCUT - 7 HARI (PRIVATE)", price: "Rp12.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
-      { name: "ALIGHT MOTION - 1 TAHUN (PRIVATE)", price: "Rp15.000", img: "https://i.postimg.cc/JtBDnsLk/alight.png" },
-      { name: "WE TV - 1 BULAN (SHARING)", price: "Rp16.000", img: "https://i.postimg.cc/N9xg9vpZ/wetv.png" },
-      { name: "ALIGHT MOTION - 1 TAHUN (SHARING)", price: "Rp12.000", img: "https://i.postimg.cc/JtBDnsLk/alight.png" },
-      { name: "VIDIO PLATINUM + LIGA 1 - 1 BULAN (PRIVATE)", price: "Rp34.000", img: "https://i.postimg.cc/zLKDNgWz/vidio.png" },
-      { name: "CRUNCHYROLL - 1 TAHUN (SHARING)", price: "Rp15.000", img: "https://i.postimg.cc/fJ8NQvrj/crunchyroll.png" },
-      { name: "VIU PREMIUM - SEUMUR HIDUP (PRIVATE)", price: "Rp35.000", img: "https://i.postimg.cc/V0LzXZhv/viu.png" },
-      { name: "CATCHPLAY+ - 1 BULAN (SHARING)", price: "Rp12.000", img: "https://i.postimg.cc/qvtztbFq/1750730669225.jpg" },
-      { name: "IQIYI PREMIUM - 1 TAHUN (SHARING)", price: "Rp20.000", img: "https://i.postimg.cc/cCsvrsqG/bb4ae6b9-3ac8-41a5-9a72-b4a442032b63.jpg" },
-      { name: "VIDIO PLATINUM + LIGA 1 - 1 BULAN (SHARING)", price: "Rp24.000", img: "https://i.postimg.cc/zLKDNgWz/vidio.png" },
-      { name: "YOUKU PREMIUM - 1 TAHUN (SHARING)", price: "Rp15.000", img: "https://i.postimg.cc/D42wBwS2/youku.png" },
-      { name: "CAPCUT - 7 HARI (SHARING)", price: "Rp10.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
-      { name: "YOUTUBE PREMIUM - 1 BULAN (PRIVATE)", price: "Rp10.000", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Youtube_logo.png/640px-Youtube_logo.png" },
-      { name: "BSTATION PREMIUM - 1 TAHUN (SHARING)", price: "Rp20.000", img: "https://i.postimg.cc/VrD69FyF/bstation.png" },
-      { name: "YOUTUBE PREMIUM - 3 BULAN (PRIVATE)", price: "Rp30.000", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Youtube_logo.png/640px-Youtube_logo.png" }
+      // Contoh: Netflix sekarang punya oldPrice untuk harga coret
+      { name: "NETFLIX 1P1U - 1 BULAN", price: "Rp40.000", oldPrice: "Rp43.000", img: "https://i.postimg.cc/H8JQWztc/netflix.png", badge: "TERLARIS" },
+      { name: "CANVA PRO - 1 TAHUN (INVITE)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/yJt64TWr/canva.png" },
+      { name: "GEMINI AI + GDRIVE 2TB + VEO3 - 15 BULAN (PRIVATE)", price: "Rp30.000", oldPrice: "Rp35.000", img: "https://i.postimg.cc/Y2LkKH7p/gemini.png" },
+      { name: "VPN HMA - 1 BULAN (SHARING)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/43xhs7c5/hma.png" },
+      { name: "VPN HMA - 1 BULAN (PRIVATE)", price: "Rp20.000", oldPrice: "Rp25.000", img: "https://i.postimg.cc/43xhs7c5/hma.png" },
+      { name: "VPN EXPRESS - 1 BULAN (SHARING)", price: "Rp15.000", oldPrice: "Rp17.000", img: "https://i.postimg.cc/3x2vN6Ff/expressvpn.png" },
+      { name: "SPOTIFY PREMIUM STUDENT - 1 BULAN (PRIVATE)", price: "Rp30.000", oldPrice: "Rp34.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
+      { name: "CAPCUT - 1 BULAN (PRIVATE)", price: "Rp25.000", oldPrice: "Rp28.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
+      { name: "CHATGPT PLUS 4.0 - 1 BULAN (PRIVATE)", price: "Rp22.000", oldPrice: "Rp25.000", img: "https://i.postimg.cc/2VFsFxYN/chatgpt.png" },
+      { name: "CAPCUT - 1 BULAN (SHARING)", price: "Rp18.000", oldPrice: "Rp20.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
+      { name: "CHATGPT PLUS 4.0 - 1 BULAN (SHARING)", price: "Rp18.000", oldPrice: "Rp20.000", img: "https://i.postimg.cc/2VFsFxYN/chatgpt.png" },
+      { name: "SPOTIFY PREMIUM - 1 BULAN (PRIVATE)", price: "Rp22.000", oldPrice: "Rp25.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
+      { name: "RCTI+ SPORTS", price: "Rp25.000", oldPrice: "Rp30.000", img: "https://i.postimg.cc/cK6PWynd/rcti.png" },
+      { name: "VIU PREMIUM - 1 TAHUN (PRIVATE)", price: "Rp10.000", oldPrice: "Rp12.000", img: "https://i.postimg.cc/V0LzXZhv/viu.png" },
+      { name: "SPOTIFY PREMIUM - 2 BULAN (PRIVATE)", price: "Rp35.000", oldPrice: "Rp40.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
+      { name: "CAPCUT - 7 HARI (PRIVATE)", price: "Rp10.000", oldPrice: "Rp12.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
+      { name: "ALIGHT MOTION - 1 TAHUN (PRIVATE)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/JtBDnsLk/alight.png" },
+      { name: "WE TV - 1 BULAN (SHARING)", price: "Rp14.000", oldPrice: "Rp16.000", img: "https://i.postimg.cc/N9xg9vpZ/wetv.png" },
+      { name: "ALIGHT MOTION - 1 TAHUN (SHARING)", price: "Rp10.000", oldPrice: "Rp12.000", img: "https://i.postimg.cc/JtBDnsLk/alight.png" },
+      { name: "VIDIO PLATINUM + LIGA 1 - 1 BULAN (PRIVATE)", price: "Rp30.000", oldPrice: "Rp34.000", img: "https://i.postimg.cc/zLKDNgWz/vidio.png" },
+      { name: "CRUNCHYROLL - 1 TAHUN (SHARING)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/fJ8NQvrj/crunchyroll.png" },
+      { name: "VIU PREMIUM - SEUMUR HIDUP (PRIVATE)", price: "Rp30.000", oldPrice: "Rp35.000", img: "https://i.postimg.cc/V0LzXZhv/viu.png" },
+      { name: "CATCHPLAY+ - 1 BULAN (SHARING)", price: "Rp10.000", oldPrice: "Rp12.000", img: "https://i.postimg.cc/qvtztbFq/1750730669225.jpg" },
+      { name: "IQIYI PREMIUM - 1 TAHUN (SHARING)", price: "Rp18.000", oldPrice: "Rp20.000", img: "https://i.postimg.cc/cCsvrsqG/bb4ae6b9-3ac8-41a5-9a72-b4a442032b63.jpg" },
+      { name: "VIDIO PLATINUM + LIGA 1 - 1 BULAN (SHARING)", price: "Rp20.000", oldPrice: "Rp24.000", img: "https://i.postimg.cc/zLKDNgWz/vidio.png" },
+      { name: "YOUKU PREMIUM - 1 TAHUN (SHARING)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/D42wBwS2/youku.png" },
+      { name: "CAPCUT - 7 HARI (SHARING)", price: "Rp8.000", oldPrice: "Rp10.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
+      { name: "YOUTUBE PREMIUM - 1 BULAN (PRIVATE)", price: "Rp8.000", oldPrice: "Rp10.000", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Youtube_logo.png/640px-Youtube_logo.png" },
+      { name: "BSTATION PREMIUM - 1 TAHUN (SHARING)", price: "Rp18.000", oldPrice: "Rp20.000", img: "https://i.postimg.cc/VrD69FyF/bstation.png" },
+      { name: "YOUTUBE PREMIUM - 3 BULAN (PRIVATE)", price: "Rp25.000", oldPrice: "Rp30.000", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Youtube_logo.png/640px-Youtube_logo.png" }
     ];
 
     function renderProducts(list) {
       const productGrid = document.getElementById("productGrid");
       productGrid.innerHTML = "";
       list.forEach(product => {
+        const badgeHtml = product.badge ? `<div class="badge">${product.badge}</div>` : '';
+        const oldPriceHtml = product.oldPrice ? `<div class="old-price">${product.oldPrice}</div>` : '';
+
         productGrid.innerHTML += `
           <div class="product">
+            ${badgeHtml}
             <img src="${product.img}" alt="icon" loading="eager">
-            <div>${product.name}</div>
-            <div class="price">${product.price}</div>
-            <a href="https://wa.me/6285166497792?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(product.name)}%20dengan%20harga%20${product.price}" target="_blank">
-              <button class="order-button">Order Sekarang</button>
-            </a>
+            <div class="product-name">${product.name}</div>
+            <div class="price-container">
+              ${oldPriceHtml}
+              <div class="current-price">${product.price}</div>
+            </div>
+            <a href="https://wa.me/6285166497792?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(product.name)}%20dengan%20harga%20${product.price}" target="_blank" class="order-button">Order</a>
           </div>
         `;
       });
@@ -617,7 +549,18 @@
 
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("darkMode", "enabled");
+      } else {
+        localStorage.setItem("darkMode", "disabled");
+      }
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark");
+      }
+    });
 
     function toggleMenu() {
       const menu = document.getElementById("menu");
