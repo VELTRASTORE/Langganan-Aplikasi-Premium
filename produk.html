@@ -325,7 +325,7 @@
         background-color: #c2185b; /* Pink gelap saat hover di dark mode */
     }
 
-    /* Modal Styles (untuk pilihan produk, ini tetap ada) */
+    /* Modal Styles */
     .modal {
       display: none; /* Hidden by default */
       position: fixed; /* Stay in place */
@@ -403,6 +403,15 @@
       color: #64b5f6;
     }
 
+    .modal-section {
+        display: none; /* Hide sections by default */
+    }
+
+    .modal-section.active {
+        display: block; /* Show active section */
+    }
+
+    /* Product Options Section */
     .modal-product-options {
       display: flex;
       flex-direction: column;
@@ -477,7 +486,7 @@
       color: #ff8a80;
     }
 
-    .modal-order-button {
+    .modal-choose-variant-button {
       background-color: #28a745;
       color: white;
       padding: 8px 15px;
@@ -490,78 +499,93 @@
       cursor: pointer;
     }
 
-    .modal-order-button:hover {
+    .modal-choose-variant-button:hover {
       background-color: #218838;
     }
 
-    body.dark .modal-order-button {
+    body.dark .modal-choose-variant-button {
       background-color: #4CAF50;
     }
 
-    body.dark .modal-order-button:hover {
+    body.dark .modal-choose-variant-button:hover {
       background-color: #45a049;
     }
 
-
-    /* Payment Section */
-    .payment-section {
-      padding: 2rem 1.5rem;
-      text-align: center;
-      background-color: #ffffff;
-      margin-top: 1.5rem;
-      border-top: 1px solid #eee;
-    }
-
-    body.dark .payment-section {
-      background-color: #2a2a2a;
-      border-top-color: #3a3a3a;
-    }
-
-    .payment-section h2 {
-      margin-bottom: 1.5rem;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #333;
-    }
-
-    body.dark .payment-section h2 {
-      color: #f0f0f0;
-    }
-
-    .payment-methods {
+    /* Payment Methods Section in Modal */
+    .modal-payment-methods {
       display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    .payment-methods div {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #555;
+    .modal-payment-methods .payment-method-card {
+        background-color: #f0f2f5;
+        padding: 15px 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        transition: background-color 0.2s, transform 0.2s;
+        cursor: pointer;
     }
 
-    body.dark .payment-methods div {
-      color: #ccc;
+    body.dark .modal-payment-methods .payment-method-card {
+        background-color: #3a3a3a;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     }
 
-    .payment-methods img {
-      width: 55px;
-      height: 55px;
-      object-fit: contain;
-      margin-bottom: 8px;
-      filter: grayscale(10%);
+    .modal-payment-methods .payment-method-card:hover {
+        transform: translateY(-2px);
+        background-color: #e2e6eb;
     }
 
-    .payment-note {
-      margin-top: 1.5rem;
-      font-size: 0.95rem;
-      color: #666;
-      line-height: 1.5;
+    body.dark .modal-payment-methods .payment-method-card:hover {
+        background-color: #4a4a4a;
     }
 
-    body.dark .payment-note {
-      color: #bbb;
+    .modal-payment-methods .payment-method-card img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .modal-payment-methods .payment-method-card .method-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    body.dark .modal-payment-methods .payment-method-card .method-name {
+        color: #f0f0f0;
+    }
+
+    /* General Payment Section (yang di luar modal) - HIDE */
+    .payment-section {
+        display: none; /* Sembunyikan bagian pembayaran umum */
+    }
+
+    /* Responsive adjustments for modal */
+    @media (max-width: 768px) {
+        .modal-content {
+            padding: 20px;
+        }
+        .modal-content h3 {
+            font-size: 1.2rem;
+        }
+        .modal-option-card, .modal-payment-methods .payment-method-card {
+            padding: 12px 15px;
+        }
+        .modal-option-type, .modal-payment-methods .payment-method-card .method-name {
+            font-size: 1rem;
+        }
+        .modal-option-current-price {
+            font-size: 1.1rem;
+        }
+        .modal-choose-variant-button {
+            padding: 7px 12px;
+            font-size: 0.85rem;
+        }
     }
   </style>
 </head>
@@ -582,11 +606,11 @@
     <div class="menu-content" id="menu">
       <a href="https://wa.me/6285166497792" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"/>Contact Person</a>
       <a href="https://www.instagram.com/veltrastoreapp/profilecard/?igsh=MTk3d2MwajBwNW5t" target="_blank"><img src="https://img.icons8.com/fluency/48/instagram-new.png"/>Testimoni</a>
-      <a href="#" onclick="toggleDarkMode()">
+      <a href="#" onclick="toggleDarkMode()" id="darkModeToggleLink">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
-        Dark Mode
+        <span>Dark Mode</span>
       </a>
     </div>
   </header>
@@ -599,13 +623,36 @@
   <div id="productOptionsModal" class="modal">
     <div class="modal-content">
       <span class="close-button" onclick="closeModal()">&times;</span>
-      <h3 id="modalProductName"></h3>
-      <div id="modalProductOptions" class="modal-product-options">
+      <h3 id="modalTitle">Pilih Layanan</h3> <div id="variantSelectionSection" class="modal-section active">
+        <div id="modalProductOptions" class="modal-product-options">
+          </div>
+      </div>
+
+      <div id="paymentSelectionSection" class="modal-section">
+        <div class="modal-payment-methods">
+          <div class="payment-method-card" onclick="selectPaymentMethod('Gopay')">
+            <img src="https://i.postimg.cc/4nfLdpK2/gopay.png" alt="Gopay">
+            <div class="method-name">Gopay</div>
+          </div>
+          <div class="payment-method-card" onclick="selectPaymentMethod('Dana')">
+            <img src="https://i.postimg.cc/WqqsrCWT/dana.png" alt="Dana">
+            <div class="method-name">Dana</div>
+          </div>
+          <div class="payment-method-card" onclick="selectPaymentMethod('SeaBank')">
+            <img src="https://i.postimg.cc/ZWBDmZ9T/seabank.png" alt="SeaBank">
+            <div class="method-name">SeaBank</div>
+          </div>
+          <div class="payment-method-card" onclick="selectPaymentMethod('QRIS')">
+            <img src="https://i.postimg.cc/qtFYnR96/qris.png" alt="QRIS">
+            <div class="method-name">QRIS</div>
+          </div>
         </div>
+        <p class="payment-note" style="margin-top: 15px; font-size: 0.9em;">Pembayaran akan diproses via WhatsApp setelah pemilihan.</p>
+      </div>
     </div>
   </div>
 
-  <section class="payment-section">
+  <section class="payment-section" style="display: none;">
     <h2>Metode Pembayaran</h2>
     <div class="payment-methods">
       <div>
@@ -680,7 +727,7 @@
       {
         id: 'gemini',
         name: "GEMINI AI + GDRIVE 2TB + VEO3",
-        img: "https://i.postimg.cc/Y2LkKH7p/gemini.png",
+        img: "https://i.postimg.cc/Pqj8rKj7/Gemini.png", // Updated Gemini AI logo
         variants: [
           { type: "15 BULAN (PRIVATE)", price: "Rp35.000" }
         ]
@@ -688,7 +735,7 @@
       {
         id: 'hmavpn',
         name: "VPN HMA",
-        img: "https://i.postimg.cc/43xhs7c5/hma.png",
+        img: "https://i.postimg.cc/Y2c62jJ5/HMA.png", // Updated HMA VPN logo
         variants: [
           { type: "1 BULAN (SHARING)", price: "Rp15.000" },
           { type: "1 BULAN (PRIVATE)", price: "Rp25.000" }
@@ -697,7 +744,7 @@
       {
         id: 'expressvpn',
         name: "VPN EXPRESS",
-        img: "https://i.postimg.cc/3x2vN6Ff/expressvpn.png",
+        img: "https://i.postimg.cc/tJ60tQ8z/Express-VPN.png", // Updated Express VPN logo
         variants: [
           { type: "1 BULAN (SHARING)", price: "Rp17.000" }
         ]
@@ -838,6 +885,7 @@
     });
 
     let currentSelectedProduct = null; // To store the product clicked for modal
+    let selectedVariantDetails = {}; // To store the chosen variant details
 
     function renderProducts(list) {
       const productGrid = document.getElementById("productGrid");
@@ -866,12 +914,16 @@
       if (!product) return;
 
       currentSelectedProduct = product; // Simpan produk yang dipilih
+      selectedVariantDetails = {}; // Reset variant details
 
       const modal = document.getElementById('productOptionsModal');
-      const modalProductName = document.getElementById('modalProductName');
+      const modalTitle = document.getElementById('modalTitle');
+      const variantSection = document.getElementById('variantSelectionSection');
+      const paymentSection = document.getElementById('paymentSelectionSection');
       const modalProductOptions = document.getElementById('modalProductOptions');
 
-      modalProductName.textContent = product.name;
+      // Perubahan di sini: Menggunakan "Pilih Layanan" untuk judul awal modal
+      modalTitle.textContent = `Pilih Layanan ${product.name}`;
       modalProductOptions.innerHTML = ''; // Clear previous options
 
       product.variants.forEach(variant => {
@@ -886,18 +938,50 @@
                 <div class="modal-option-current-price">${variant.price}</div>
             </div>
           </div>
-          <button class="modal-order-button" onclick="orderProduct('${product.name} ${variant.type}', '${variant.price}', event)">Order</button>
+          <button class="modal-choose-variant-button" onclick="chooseVariant('${product.name}', '${variant.type}', '${variant.price}', event)">Pilih</button>
         `;
         modalProductOptions.appendChild(optionCard);
       });
 
+      // Tampilkan bagian varian dan sembunyikan bagian pembayaran
+      variantSection.classList.add('active');
+      paymentSection.classList.remove('active');
       modal.style.display = 'flex'; // Show the modal
     }
+
+    function chooseVariant(productName, variantType, price, event) {
+        event.stopPropagation(); // Prevent modal from closing if clicking on button
+        selectedVariantDetails = { productName, variantType, price };
+        
+        const modalTitle = document.getElementById('modalTitle');
+        const variantSection = document.getElementById('variantSelectionSection');
+        const paymentSection = document.getElementById('paymentSelectionSection');
+
+        modalTitle.textContent = 'Pilih Metode Pembayaran'; // Ubah judul modal
+        variantSection.classList.remove('active'); // Sembunyikan pilihan varian
+        paymentSection.classList.add('active'); // Tampilkan pilihan pembayaran
+    }
+
+    function selectPaymentMethod(method) {
+        if (!selectedVariantDetails.productName) {
+            alert('Silakan pilih varian produk terlebih dahulu.');
+            return;
+        }
+
+        const { productName, variantType, price } = selectedVariantDetails;
+        const whatsappMessage = `Halo kak, apakah produk ini tersedia?\n\nProduk: ${productName}\nVarian: ${variantType}\nHarga: ${price}\nMetode Pembayaran: ${method}\n\nMohon diproses ya kak 🙏`;
+        const whatsappUrl = `https://wa.me/6285166497792?text=${encodeURIComponent(whatsappMessage)}`;
+        
+        window.open(whatsappUrl, '_blank');
+        closeModal(); // Close modal after directing to WhatsApp
+    }
+
 
     function closeModal() {
       const modal = document.getElementById('productOptionsModal');
       modal.style.display = 'none'; // Hide the modal
       currentSelectedProduct = null; // Reset
+      selectedVariantDetails = {}; // Reset variant details
     }
 
     // Close modal if clicked outside of modal-content
@@ -913,30 +997,31 @@
         event.stopPropagation();
     };
 
-    function orderProduct(fullName, price, event) {
-        event.stopPropagation(); // Prevent modal from closing if clicking on button
-        const whatsappUrl = `https://wa.me/6285166497792?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(fullName)}%20dengan%20harga%20${encodeURIComponent(price)}`;
-        window.open(whatsappUrl, '_blank');
-        closeModal(); // Close modal after order
-    }
-
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
+      const darkModeToggleSpan = document.getElementById("darkModeToggleLink").querySelector("span");
+
       if (document.body.classList.contains("dark")) {
         localStorage.setItem("darkMode", "enabled");
+        darkModeToggleSpan.textContent = "Light Mode"; // Ubah teks menjadi Light Mode
       } else {
         localStorage.setItem("darkMode", "disabled");
+        darkModeToggleSpan.textContent = "Dark Mode"; // Ubah teks menjadi Dark Mode
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      if (localStorage.getItem("darkMode") === "enabled") {
-        document.body.classList.add("dark");
-      }
       renderProducts(products); // Initial render
       
-      // Menghapus *SEMUA* logika yang terkait dengan welcome pop-up atau pop-up otomatis lainnya
-      // Saya akan memastikan tidak ada panggilan fungsi atau elemen CSS yang menyebabkan pop-up kosong muncul secara otomatis
+      const darkModeToggleSpan = document.getElementById("darkModeToggleLink").querySelector("span");
+
+      // Periksa preferensi dark mode dari localStorage saat halaman dimuat
+      if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark");
+        darkModeToggleSpan.textContent = "Light Mode"; // Set teks awal jika dark mode aktif
+      } else {
+        darkModeToggleSpan.textContent = "Dark Mode"; // Set teks awal jika dark mode tidak aktif
+      }
     });
 
     function toggleMenu() {
@@ -948,7 +1033,10 @@
     document.addEventListener('click', function(event) {
         const menu = document.getElementById('menu');
         const menuButton = document.querySelector('.menu-button');
-        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+        const darkModeToggleLink = document.getElementById("darkModeToggleLink"); // Ambil elemen link
+        
+        // Pastikan klik di luar menu dan bukan tombol menu itu sendiri atau tombol dark mode
+        if (!menu.contains(event.target) && !menuButton.contains(event.target) && !darkModeToggleLink.contains(event.target)) {
             if (menu.classList.contains('show-menu')) {
                 menu.classList.remove('show-menu');
             }
