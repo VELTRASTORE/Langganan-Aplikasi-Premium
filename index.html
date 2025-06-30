@@ -3,240 +3,431 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veltra Store</title>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Veltra Store - Aplikasi Premium Termurah</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* Reset & Base Styles */
     * {
-      font-family: 'SF Pro Display', sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }body {
-  background-color: #f0f0f0;
-  color: #333;
-  transition: background-color 0.3s, color 0.3s;
-}
+    }
 
-body.dark {
-  background-color: #121212;
-  color: #f0f0f0;
-}
+    body {
+      background-color: #f0f2f5;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Agar konten mengisi tinggi viewport */
+      overflow-x: hidden; /* Mencegah scroll horizontal */
+      position: relative; /* Penting untuk posisi absolut menu-button */
+    }
 
-.welcome-popup {
-  background: #ffffff;
-  color: #333;
-  padding: 12px 20px;
-  text-align: center;
-  font-weight: bold;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  animation: fadeSlide 2s forwards;
-}
+    body.dark {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+    }
 
-@keyframes fadeSlide {
-  0% { opacity: 1; transform: translateY(0); }
-  80% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-100%); display: none; }
-}
+    /* Menu (sekarang akan berada langsung di body atau container utama) */
+    .menu-button {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: #333; /* Default color for light mode */
+      cursor: pointer;
+      padding: 0.5rem;
+      position: absolute; /* Posisi absolut relatif terhadap body */
+      right: 1.5rem;
+      top: 1rem;
+      z-index: 101; /* Pastikan di atas hero section */
+    }
 
-header {
-  text-align: center;
-  background: linear-gradient(to right, #4b6cb7, #182848);
-  color: white;
-  padding: 1.2rem;
-  position: relative;
-}
+    body.dark .menu-button {
+      color: #f0f0f0; /* Color for dark mode */
+    }
 
-header img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
+    .menu-content {
+      display: none;
+      position: absolute;
+      /* Atur posisi relatif terhadap body, disesuaikan dengan posisi tombol */
+      top: calc(1rem + 24px + 10px); /* top tombol + tinggi tombol + margin */
+      right: 1.5rem;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 100; /* Pastikan di atas elemen lain, tapi di bawah tombol menu jika perlu */
+      min-width: 180px;
+    }
 
-header h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-}
+    body.dark .menu-content {
+      background-color: #3a3a3a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
 
-header p {
-  font-size: 1rem;
-  font-weight: 500;
-}
+    .menu-content a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      font-size: 1rem;
+      transition: background-color 0.2s;
+    }
 
-.menu-button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  color: white;
-  cursor: pointer;
-}
+    body.dark .menu-content a {
+      color: #f0f0f0;
+    }
 
-.menu-content {
-  display: none;
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 10;
-}
+    .menu-content a img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
 
-.menu-content a {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  text-decoration: none;
-  color: #333;
-  font-size: 0.9rem;
-}
+    .menu-content a:hover {
+      background-color: #f5f5f5;
+    }
 
-.menu-content a img {
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
-}
+    body.dark .menu-content a:hover {
+      background-color: #4a4a4a;
+    }
 
-.menu-content a:hover {
-  background-color: #eee;
-}
+    .show-menu {
+      display: block;
+    }
 
-.show-menu {
-  display: block;
-}
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      background: linear-gradient(135deg, #007bff 0%, #64b5f6 100%); /* Gradien biru cerah */
+      color: white;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      flex-grow: 1; /* Agar mengambil sisa ruang vertikal */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Pastikan tidak ada yang keluar dari batas */
+      animation: fadeInBackground 1s ease-out;
+      padding-top: 6rem; /* Tambahkan padding agar tidak tertutup menu */
+    }
 
-.box-section {
-  background-color: white;
-  margin: 1.5rem;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: center;
-  animation: fadeUp 1s ease forwards;
-}
+    body.dark .hero-section {
+      background: linear-gradient(135deg, #1e3a5f 0%, #4a75a7 100%); /* Gradien gelap untuk dark mode */
+    }
 
-.dark .box-section {
-  background-color: #1e1e1e;
-}
+    /* Animasi background */
+    @keyframes fadeInBackground {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-.box-section p {
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.6;
-}
+    .hero-logo img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.3); /* Border efek */
+      animation: zoomInLogo 0.8s ease-out;
+    }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    @keyframes zoomInLogo {
+        from { transform: scale(0.5); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
 
-.payment-section {
-  margin: 1.5rem;
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: center;
-}
+    .hero-section h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
+      font-weight: 800; /* Lebih tebal */
+      letter-spacing: 1px;
+      animation: slideInUp 0.8s ease-out forwards;
+      opacity: 0; /* Dimulai dengan opacity 0 */
+      animation-delay: 0.2s;
+    }
 
-.dark .payment-section {
-  background-color: #1e1e1e;
-}
+    .hero-section .tagline {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      font-weight: 500;
+      max-width: 500px;
+      line-height: 1.5;
+      animation: slideInUp 0.8s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.4s;
+    }
 
-.payment-section h2 {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-}
+    /* Keyframes untuk animasi teks */
+    @keyframes slideInUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
 
-.payment-methods {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+    .start-button {
+      background-color: #ff69b4; /* Warna pink menarik */
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      animation: zoomInButton 0.8s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.6s;
+    }
 
-.payment-methods div {
-  text-align: center;
-}
+    body.dark .start-button {
+      background-color: #e91e63; /* Pink gelap untuk dark mode */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
 
-.payment-methods img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
+    .start-button:hover {
+      background-color: #e0539c; /* Pink lebih gelap saat hover */
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
 
-.start-button {
-  display: block;
-  margin: 2rem auto;
-  padding: 0.8rem 2rem;
-  font-size: 1rem;
-  font-weight: bold;
-  background-color: #4b6cb7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
+    body.dark .start-button:hover {
+      background-color: #c2185b;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
 
-.start-button:hover {
-  background-color: #3954a1;
-}
+    @keyframes zoomInButton {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
 
+    /* Features Section */
+    .features-section {
+      background-color: #ffffff;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); /* Shadow di atas */
+    }
+
+    body.dark .features-section {
+      background-color: #2a2a2a;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .features-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2.5rem;
+      color: #007bff;
+      font-weight: 700;
+    }
+
+    body.dark .features-section h2 {
+      color: #64b5f6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .feature-item {
+      background-color: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between; /* Untuk meratakan konten dan mendorong tombol ke bawah */
+    }
+
+    body.dark .feature-item {
+      background-color: #3a3a3a;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-item img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+
+    .feature-item h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: #444;
+      font-weight: 600;
+    }
+
+    body.dark .feature-item h3 {
+      color: #f0f0f0;
+    }
+
+    .feature-item p {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 1.5rem; /* Menambahkan margin bawah yang cukup untuk tombol */
+      flex-grow: 1; /* Memungkinkan paragraf mengambil ruang yang tersedia */
+    }
+
+    body.dark .feature-item p {
+      color: #bbb;
+    }
+
+    .feature-item .testimonial-button {
+      background-color: #007bff;
+      color: white;
+      padding: 0.7rem 1.4rem; /* Sedikit lebih besar */
+      border: none;
+      border-radius: 25px; /* Lebih bulat */
+      font-size: 0.95rem; /* Sedikit lebih besar */
+      font-weight: 600; /* Lebih tebal */
+      cursor: pointer;
+      text-decoration: none; /* Penting karena ini adalah <a> */
+      display: inline-block; /* Agar padding dan radius berfungsi baik */
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Tambahkan sedikit bayangan */
+    }
+
+    .feature-item .testimonial-button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px); /* Efek sedikit naik saat hover */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    body.dark .feature-item .testimonial-button {
+      background-color: #64b5f6;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    }
+
+    body.dark .feature-item .testimonial-button:hover {
+      background-color: #1e88e5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.9rem;
+      margin-top: auto; /* Dorong footer ke paling bawah */
+    }
+
+    body.dark footer {
+      background-color: #1a1a1a;
+    }
+
+    footer a {
+      color: #64b5f6;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: #007bff;
+    }
+
+    /* Media Queries untuk responsivitas */
+    @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 2.2rem;
+      }
+      .hero-section .tagline {
+        font-size: 1rem;
+      }
+      .start-button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .menu-button {
+        top: 0.8rem;
+        right: 1rem;
+      }
+      .menu-content {
+        top: calc(0.8rem + 24px + 10px);
+        right: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="welcome-popup">Selamat datang kak di Veltra Store!</div>
-  <header>
-    <img src="https://i.postimg.cc/jDLNTZZz/animeguy.jpg" alt="logo chibi">
+  <button class="menu-button" onclick="toggleMenu()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+  <div class="menu-content" id="menu">
+    <a href="https://wa.me/6285166497792" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"/>Contact Person</a>
+    <a href="https://www.instagram.com/veltrastoreapp/profilecard/?igsh=MTk3d2MwajBwNW5t" target="_blank"><img src="https://img.icons8.com/fluency/48/instagram-new.png"/>Testimoni</a>
+    <a href="#" onclick="toggleDarkMode()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      Dark Mode
+    </a>
+  </div>
+
+  <div class="hero-section">
+    <div class="hero-logo">
+      <img src="https://i.postimg.cc/jDLNTZZz/animeguy.jpg" alt="Veltra Store Logo">
+    </div>
     <h1>Veltra Store</h1>
-    <p>Langganan Aplikasi Premium Murah</p>
-    <button class="menu-button" onclick="toggleMenu()">⋮</button>
-    <div class="menu-content" id="menu">
-      <a href="https://wa.me/6285166497792" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"/>Contact Person</a>
-      <a href="https://www.instagram.com/veltrastore_jasasuntiksosmed/profilecard/?igsh=MTk3d2MwajBwNW5t" target="_blank"><img src="https://img.icons8.com/fluency/48/instagram-new.png"/>Testimoni</a>
-      <a href="#" onclick="toggleDarkMode()">🌓 Dark Mode</a>
-    </div>
-  </header>
-  <section class="box-section">
-    <p>Langganan aplikasi premium adalah solusi hemat untuk menikmati fitur lengkap dari berbagai aplikasi seperti Netflix, Spotify, CapCut, Canva, dan lainnya tanpa perlu membayar harga asli yang mahal.</p>
-  </section>
-  <section class="box-section">
-    <p>Kenapa harus beli di Veltra Store? Karena kami menawarkan harga termurah, proses cepat, dan pelayanan ramah. Sudah dipercaya ratusan pelanggan dengan banyak testimoni positif.</p>
-  </section>
-  <section class="box-section">
-    <p>Kualitas langganan di Veltra Store dijamin aman, legal, dan tahan lama. Setiap akun dicek manual dan diberikan garansi jika ada kendala dalam waktu tertentu.</p>
-  </section>
-  <section class="payment-section">
-    <h2>Metode Pembayaran</h2>
-    <div class="payment-methods">
-      <div>
-        <img src="https://i.postimg.cc/4nfLdpK2/gopay.png" alt="Gopay" loading="eager">
-        <div>Gopay</div>
+    <p class="tagline">Temukan Aplikasi Premium Termurah & Terpercaya untuk Kebutuhan Digitalmu!</p>
+    <button class="start-button" onclick="goToProductsPage()">Mulai Belanja Sekarang!</button>
+  </div>
+
+  <section class="features-section">
+    <h2>Mengapa Memilih Veltra Store?</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <img src="https://img.icons8.com/ios-filled/50/007bff/price-tag.png" alt="Harga Termurah">
+        <h3>Harga Terbaik</h3>
+        <p>Kami menawarkan harga aplikasi premium yang sangat kompetitif.</p>
       </div>
-      <div>
-        <img src="https://i.postimg.cc/WqqsrCWT/dana.png" alt="Dana" loading="eager">
-        <div>Dana</div>
+      <div class="feature-item">
+        <img src="https://img.icons8.com/ios-filled/50/007bff/trust--v1.png" alt="Terpercaya">
+        <h3>Terpercaya</h3>
+        <p>Layanan yang aman dan pengalaman belanja yang tanpa khawatir.</p>
+        <a href="https://www.instagram.com/veltrastoreapp/profilecard/?igsh=MTk3d2MwajBwNW5t" target="_blank" class="testimonial-button">Lihat Testimoni</a>
       </div>
-      <div>
-        <img src="https://i.postimg.cc/ZWBDmZ9T/seabank.png" alt="SeaBank" loading="eager">
-        <div>SeaBank</div>
+      <div class="feature-item">
+        <img src="https://img.icons8.com/ios-filled/50/007bff/lightning-bolt.png" alt="Cepat">
+        <h3>Proses Cepat</h3>
+        <p>Transaksi instan, langsung diproses setelah pembayaran.</p>
       </div>
-      <div>
-        <img src="https://i.postimg.cc/qtFYnR96/qris.png" alt="QRIS" loading="eager">
-        <div>QRIS</div>
+      <div class="feature-item">
+        <img src="https://img.icons8.com/ios-filled/50/007bff/customer-support.png" alt="Dukungan">
+        <h3>Dukungan Penuh</h3>
+        <p>Tim support kami siap membantu kapan pun Anda butuhkan.</p>
       </div>
     </div>
   </section>
-  <button class="start-button" onclick="goToPage2()">Mulai Sekarang</button>
+
+  <footer>
+    &copy; 2025 Veltra Store. All rights reserved. | <a href="https://wa.me/6285166497792" target="_blank">Hubungi Kami</a>
+  </footer>
 
   <script>
     function toggleMenu() {
@@ -244,14 +435,38 @@ header p {
       menu.classList.toggle("show-menu");
     }
 
+    // Pastikan menu tertutup jika diklik di luar area menu atau tombol
+    document.addEventListener('click', function(event) {
+        const menu = document.getElementById('menu');
+        const menuButton = document.querySelector('.menu-button');
+        
+        // Periksa apakah event.target BUKAN bagian dari menu DAN BUKAN bagian dari tombol menu
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            // Jika menu sedang terbuka, tutup
+            if (menu.classList.contains('show-menu')) {
+                menu.classList.remove('show-menu');
+            }
+        }
+    });
+
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("darkMode", "enabled");
+      } else {
+        localStorage.setItem("darkMode", "disabled");
+      }
     }
 
-    // Fungsi baru untuk navigasi ke Page 2
-    function goToPage2() {
-      // Pastikan nama file HTML Page 2 sudah benar, contoh: 'produk.html'
-      window.location.href = 'produk.html';
+    document.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark");
+      }
+    });
+
+    // Fungsi untuk navigasi ke halaman produk
+    function goToProductsPage() {
+      window.location.href = 'produk.html'; // Sesuaikan nama file jika berbeda
     }
   </script>
 </body>
