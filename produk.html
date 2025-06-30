@@ -215,20 +215,20 @@
       color: #f0f0f0;
     }
 
-    /* Product Grid */
+    /* Product Grid - Kembali ke 2 kolom */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr); /* Dua kolom */
       gap: 1rem;
       padding: 1rem 1.5rem;
-      max-width: 700px;
+      max-width: 700px; /* Lebar maksimum untuk 2 kolom */
       margin: 0 auto;
     }
 
     /* Product Card */
     .product {
       background-color: #ffffff;
-      padding: 1.2rem 1rem;
+      padding: 1rem; /* Padding lebih kecil */
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       display: flex;
@@ -237,8 +237,9 @@
       text-align: center;
       transition: transform 0.2s, box-shadow 0.2s;
       position: relative;
-      height: 280px; /* Menambah tinggi kartu untuk mengakomodasi teks yang lebih panjang */
+      height: 220px; /* Tinggi kartu lebih pendek */
       justify-content: space-between;
+      cursor: pointer;
     }
 
     body.dark .product {
@@ -273,95 +274,225 @@
     }
 
     .product img {
-      width: 75px;
-      height: 75px;
-      margin-bottom: 0.5rem;
+      width: 70px; /* Sedikit lebih kecil */
+      height: 70px; /* Sedikit lebih kecil */
+      margin-bottom: 0.2rem;
       object-fit: contain;
     }
 
     .product .product-name {
-      font-size: 0.95rem;
+      font-size: 0.9rem; /* Ukuran font sedikit lebih kecil */
       font-weight: 500;
       color: #444;
-      margin-bottom: 0.5rem;
-      min-height: 50px; /* Meningkatkan min-height untuk menampung 2-3 baris teks */
+      margin-bottom: 0.3rem; /* Mengurangi margin-bottom */
+      min-height: 40px; /* Min-height disesuaikan */
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 1.3; /* Mengatur jarak antar baris */
+      line-height: 1.3; /* Line-height lebih rapat */
       text-align: center;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: -webkit-box; /* Untuk menampilkan ellipsis multi-baris */
-      -webkit-line-clamp: 3; /* Maksimal 3 baris */
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* Maksimal 3 baris untuk teks yang panjang */
       -webkit-box-orient: vertical;
-      white-space: normal; /* Pastikan teks membungkus */
+      white-space: normal;
     }
 
     body.dark .product .product-name {
       color: #e0e0e0;
     }
 
-    .product .price-container {
+    .product .choose-text {
+        font-size: 0.8rem; /* Ukuran font "Pilih" sedikit lebih kecil */
+        font-weight: 600;
+        color: #007bff; /* Warna biru untuk teks "Pilih" */
+        margin-top: auto;
+        padding-top: 0.3rem; /* Padding atas lebih kecil */
+        opacity: 0.9;
+    }
+
+    body.dark .product .choose-text {
+        color: #64b5f6;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1000; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px); /* Efek blur pada background */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s ease-out;
+      position: relative;
+    }
+
+    body.dark .modal-content {
+      background-color: #2a2a2a;
+      color: #f0f0f0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .close-button {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+      color: #333;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    body.dark .close-button {
+      color: #ccc;
+    }
+
+    body.dark .close-button:hover,
+    body.dark .close-button:focus {
+      color: #eee;
+    }
+
+    .modal-content h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      color: #007bff;
+    }
+
+    body.dark .modal-content h3 {
+      color: #64b5f6;
+    }
+
+    .modal-product-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .modal-option-card {
+      background-color: #f0f2f5;
+      padding: 15px 20px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      transition: background-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    body.dark .modal-option-card {
+      background-color: #3a3a3a;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .modal-option-card:hover {
+      transform: translateY(-2px);
+      background-color: #e2e6eb;
+    }
+
+    body.dark .modal-option-card:hover {
+      background-color: #4a4a4a;
+    }
+
+    .modal-option-info {
+      text-align: left;
+    }
+
+    .modal-option-type {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    body.dark .modal-option-type {
+      color: #f0f0f0;
+    }
+
+    .modal-option-price-container {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        margin-top: auto;
-        width: 100%;
-        margin-bottom: 0.8rem;
+        align-items: flex-start;
     }
 
-    .product .old-price {
+    .modal-option-old-price {
         color: #999;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         text-decoration: line-through;
-        margin-bottom: 0.1rem;
         font-weight: 400;
+        margin-bottom: 2px;
     }
 
-    body.dark .product .old-price {
+    body.dark .modal-option-old-price {
         color: #888;
     }
 
-    .product .current-price {
+    .modal-option-current-price {
       color: #e91e63;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      margin-bottom: 0;
     }
 
-    body.dark .product .current-price {
+    body.dark .modal-option-current-price {
       color: #ff8a80;
     }
 
-    .order-button {
-        display: inline-block;
-        background-color: #28a745;
-        color: white;
-        padding: 8px 15px;
-        border-radius: 20px;
-        text-decoration: none;
-        font-size: 0.9rem;
-        font-weight: 600;
-        transition: background-color 0.2s ease;
-        border: none;
-        cursor: pointer;
-        width: 80%;
-        max-width: 150px;
-        margin-top: auto;
+    .modal-order-button {
+      background-color: #28a745;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+      border: none;
+      cursor: pointer;
     }
 
-    .order-button:hover {
-        background-color: #218838;
+    .modal-order-button:hover {
+      background-color: #218838;
     }
 
-    body.dark .order-button {
+    body.dark .modal-order-button {
       background-color: #4CAF50;
     }
 
-    body.dark .order-button:hover {
+    body.dark .modal-order-button:hover {
       background-color: #45a049;
     }
+
 
     /* Payment Section */
     .payment-section {
@@ -456,6 +587,16 @@
     <input type="text" placeholder="Cari aplikasi..." onkeyup="filterProducts(this.value)" />
   </div>
   <div class="product-grid" id="productGrid"></div>
+
+  <div id="productOptionsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <h3 id="modalProductName"></h3>
+      <div id="modalProductOptions" class="modal-product-options">
+        </div>
+    </div>
+  </div>
+
   <section class="payment-section">
     <h2>Metode Pembayaran</h2>
     <div class="payment-methods">
@@ -490,57 +631,220 @@
         return 'Rp' + numericPrice.toLocaleString('id-ID');
     }
 
-    const products = [
-      // Contoh: Netflix sekarang punya oldPrice untuk harga coret
-      { name: "NETFLIX 1P1U - 1 BULAN", price: "Rp40.000", oldPrice: "Rp43.000", img: "https://i.postimg.cc/H8JQWztc/netflix.png", badge: "TERLARIS" },
-      { name: "CANVA PRO - 1 TAHUN (INVITE)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/yJt64TWr/canva.png" },
-      { name: "GEMINI AI + GDRIVE 2TB + VEO3 - 15 BULAN (PRIVATE)", price: "Rp30.000", oldPrice: "Rp35.000", img: "https://i.postimg.cc/Y2LkKH7p/gemini.png" },
-      { name: "VPN HMA - 1 BULAN (SHARING)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/43xhs7c5/hma.png" },
-      { name: "VPN HMA - 1 BULAN (PRIVATE)", price: "Rp20.000", oldPrice: "Rp25.000", img: "https://i.postimg.cc/43xhs7c5/hma.png" },
-      { name: "VPN EXPRESS - 1 BULAN (SHARING)", price: "Rp15.000", oldPrice: "Rp17.000", img: "https://i.postimg.cc/3x2vN6Ff/expressvpn.png" },
-      { name: "SPOTIFY PREMIUM STUDENT - 1 BULAN (PRIVATE)", price: "Rp30.000", oldPrice: "Rp34.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
-      { name: "CAPCUT - 1 BULAN (PRIVATE)", price: "Rp25.000", oldPrice: "Rp28.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
-      { name: "CHATGPT PLUS 4.0 - 1 BULAN (PRIVATE)", price: "Rp22.000", oldPrice: "Rp25.000", img: "https://i.postimg.cc/2VFsFxYN/chatgpt.png" },
-      { name: "CAPCUT - 1 BULAN (SHARING)", price: "Rp18.000", oldPrice: "Rp20.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
-      { name: "CHATGPT PLUS 4.0 - 1 BULAN (SHARING)", price: "Rp18.000", oldPrice: "Rp20.000", img: "https://i.postimg.cc/2VFsFxYN/chatgpt.png" },
-      { name: "SPOTIFY PREMIUM - 1 BULAN (PRIVATE)", price: "Rp22.000", oldPrice: "Rp25.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
-      { name: "RCTI+ SPORTS", price: "Rp25.000", oldPrice: "Rp30.000", img: "https://i.postimg.cc/cK6PWynd/rcti.png" },
-      { name: "VIU PREMIUM - 1 TAHUN (PRIVATE)", price: "Rp10.000", oldPrice: "Rp12.000", img: "https://i.postimg.cc/V0LzXZhv/viu.png" },
-      { name: "SPOTIFY PREMIUM - 2 BULAN (PRIVATE)", price: "Rp35.000", oldPrice: "Rp40.000", img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png" },
-      { name: "CAPCUT - 7 HARI (PRIVATE)", price: "Rp10.000", oldPrice: "Rp12.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
-      { name: "ALIGHT MOTION - 1 TAHUN (PRIVATE)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/JtBDnsLk/alight.png" },
-      { name: "WE TV - 1 BULAN (SHARING)", price: "Rp14.000", oldPrice: "Rp16.000", img: "https://i.postimg.cc/N9xg9vpZ/wetv.png" },
-      { name: "ALIGHT MOTION - 1 TAHUN (SHARING)", price: "Rp10.000", oldPrice: "Rp12.000", img: "https://i.postimg.cc/JtBDnsLk/alight.png" },
-      { name: "VIDIO PLATINUM + LIGA 1 - 1 BULAN (PRIVATE)", price: "Rp30.000", oldPrice: "Rp34.000", img: "https://i.postimg.cc/zLKDNgWz/vidio.png" },
-      { name: "CRUNCHYROLL - 1 TAHUN (SHARING)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/fJ8NQvrj/crunchyroll.png" },
-      { name: "VIU PREMIUM - SEUMUR HIDUP (PRIVATE)", price: "Rp30.000", oldPrice: "Rp35.000", img: "https://i.postimg.cc/V0LzXZhv/viu.png" },
-      { name: "CATCHPLAY+ - 1 BULAN (SHARING)", price: "Rp10.000", oldPrice: "Rp12.000", img: "https://i.postimg.cc/qvtztbFq/1750730669225.jpg" },
-      { name: "IQIYI PREMIUM - 1 TAHUN (SHARING)", price: "Rp18.000", oldPrice: "Rp20.000", img: "https://i.postimg.cc/cCsvrsqG/bb4ae6b9-3ac8-41a5-9a72-b4a442032b63.jpg" },
-      { name: "VIDIO PLATINUM + LIGA 1 - 1 BULAN (SHARING)", price: "Rp20.000", oldPrice: "Rp24.000", img: "https://i.postimg.cc/zLKDNgWz/vidio.png" },
-      { name: "YOUKU PREMIUM - 1 TAHUN (SHARING)", price: "Rp12.000", oldPrice: "Rp15.000", img: "https://i.postimg.cc/D42wBwS2/youku.png" },
-      { name: "CAPCUT - 7 HARI (SHARING)", price: "Rp8.000", oldPrice: "Rp10.000", img: "https://i.postimg.cc/WFN8V0Kg/capcut.png" },
-      { name: "YOUTUBE PREMIUM - 1 BULAN (PRIVATE)", price: "Rp8.000", oldPrice: "Rp10.000", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Youtube_logo.png/640px-Youtube_logo.png" },
-      { name: "BSTATION PREMIUM - 1 TAHUN (SHARING)", price: "Rp18.000", oldPrice: "Rp20.000", img: "https://i.postimg.cc/VrD69FyF/bstation.png" },
-      { name: "YOUTUBE PREMIUM - 3 BULAN (PRIVATE)", price: "Rp25.000", oldPrice: "Rp30.000", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Youtube_logo.png/640px-Youtube_logo.png" }
+    // Fungsi untuk membuat harga coret yang lebih tinggi secara otomatis
+    function generateOldPrice(currentPriceString) {
+        const currentPriceNum = getNumericPrice(currentPriceString);
+        let oldPriceNum;
+
+        if (currentPriceNum <= 10000) {
+            oldPriceNum = currentPriceNum + 2000;
+        } else if (currentPriceNum <= 20000) {
+            oldPriceNum = currentPriceNum + 3000;
+        } else if (currentPriceNum <= 30000) {
+            oldPriceNum = currentPriceNum + 4000;
+        } else {
+            oldPriceNum = currentPriceNum + 5000;
+        }
+        return formatPrice(oldPriceNum);
+    }
+
+    // --- STRUKTUR DATA PRODUK BARU ---
+    // Sekarang setiap produk bisa memiliki beberapa "variants" (private/sharing)
+    // atau hanya satu jika tidak ada variasi.
+    const productsData = [
+      {
+        id: 'netflix',
+        name: "NETFLIX 1P1U",
+        img: "https://i.postimg.cc/H8JQWztc/netflix.png",
+        badge: "TERMANTAP",
+        variants: [
+          { type: "1 BULAN", price: "Rp43.000", badge: "TERMANTAP" } // Badge bisa spesifik untuk varian
+        ]
+      },
+      {
+        id: 'canva',
+        name: "CANVA PRO",
+        img: "https://i.postimg.cc/yJt64TWr/canva.png",
+        variants: [
+          { type: "1 TAHUN (INVITE)", price: "Rp15.000" }
+        ]
+      },
+      {
+        id: 'gemini',
+        name: "GEMINI AI + GDRIVE 2TB + VEO3",
+        img: "https://i.postimg.cc/Y2LkKH7p/gemini.png",
+        variants: [
+          { type: "15 BULAN (PRIVATE)", price: "Rp35.000" }
+        ]
+      },
+      {
+        id: 'hmavpn',
+        name: "VPN HMA",
+        img: "https://i.postimg.cc/43xhs7c5/hma.png",
+        variants: [
+          { type: "1 BULAN (SHARING)", price: "Rp15.000" },
+          { type: "1 BULAN (PRIVATE)", price: "Rp25.000" }
+        ]
+      },
+      {
+        id: 'expressvpn',
+        name: "VPN EXPRESS",
+        img: "https://i.postimg.cc/3x2vN6Ff/expressvpn.png",
+        variants: [
+          { type: "1 BULAN (SHARING)", price: "Rp17.000" }
+        ]
+      },
+      {
+        id: 'spotify',
+        name: "SPOTIFY PREMIUM",
+        img: "https://i.postimg.cc/Y4kfN1tZ/spotify.png",
+        variants: [
+          { type: "STUDENT - 1 BULAN (PRIVATE)", price: "Rp34.000" },
+          { type: "1 BULAN (PRIVATE)", price: "Rp25.000" },
+          { type: "2 BULAN (PRIVATE)", price: "Rp40.000" }
+        ]
+      },
+      {
+        id: 'capcut',
+        name: "CAPCUT",
+        img: "https://i.postimg.cc/WFN8V0Kg/capcut.png",
+        variants: [
+          { type: "1 BULAN (PRIVATE)", price: "Rp28.000" },
+          { type: "1 BULAN (SHARING)", price: "Rp20.000" },
+          { type: "7 HARI (PRIVATE)", price: "Rp12.000" },
+          { type: "7 HARI (SHARING)", price: "Rp10.000" }
+        ]
+      },
+      {
+        id: 'chatgpt',
+        name: "CHATGPT PLUS 4.0",
+        img: "https://i.postimg.cc/2VFsFxYN/chatgpt.png",
+        variants: [
+          { type: "1 BULAN (PRIVATE)", price: "Rp25.000" },
+          { type: "1 BULAN (SHARING)", price: "Rp20.000" }
+        ]
+      },
+      {
+        id: 'rcti',
+        name: "RCTI+ SPORTS",
+        img: "https://i.postimg.cc/cK6PWynd/rcti.png",
+        variants: [
+          { type: "TANPA PILIHAN SPESIFIK", price: "Rp30.000" }
+        ]
+      },
+      {
+        id: 'viu',
+        name: "VIU PREMIUM",
+        img: "https://i.postimg.cc/V0LzXZhv/viu.png",
+        variants: [
+          { type: "1 TAHUN (PRIVATE)", price: "Rp12.000" },
+          { type: "SEUMUR HIDUP (PRIVATE)", price: "Rp35.000" }
+        ]
+      },
+      {
+        id: 'alightmotion',
+        name: "ALIGHT MOTION",
+        img: "https://i.postimg.cc/JtBDnsLk/alight.png",
+        variants: [
+          { type: "1 TAHUN (PRIVATE)", price: "Rp15.000" },
+          { type: "1 TAHUN (SHARING)", price: "Rp12.000" }
+        ]
+      },
+      {
+        id: 'wetv',
+        name: "WE TV",
+        img: "https://i.postimg.cc/N9xg9vpZ/wetv.png",
+        variants: [
+          { type: "1 BULAN (SHARING)", price: "Rp16.000" }
+        ]
+      },
+      {
+        id: 'vidioplatinum',
+        name: "VIDIO PLATINUM + LIGA 1",
+        img: "https://i.postimg.cc/zLKDNgWz/vidio.png",
+        variants: [
+          { type: "1 BULAN (PRIVATE)", price: "Rp34.000" },
+          { type: "1 BULAN (SHARING)", price: "Rp24.000" }
+        ]
+      },
+      {
+        id: 'crunchyroll',
+        name: "CRUNCHYROLL",
+        img: "https://i.postimg.cc/fJ8NQvrj/crunchyroll.png",
+        variants: [
+          { type: "1 TAHUN (SHARING)", price: "Rp15.000" }
+        ]
+      },
+      {
+        id: 'catchplay',
+        name: "CATCHPLAY+",
+        img: "https://i.postimg.cc/qvtztbFq/1750730669225.jpg",
+        variants: [
+          { type: "1 BULAN (SHARING)", price: "Rp12.000" }
+        ]
+      },
+      {
+        id: 'iqiyi',
+        name: "IQIYI PREMIUM",
+        img: "https://i.postimg.cc/cCsvrsqG/bb4ae6b9-3ac8-41a5-9a72-b4a442032b63.jpg",
+        variants: [
+          { type: "1 TAHUN (SHARING)", price: "Rp20.000" }
+        ]
+      },
+      {
+        id: 'youku',
+        name: "YOUKU PREMIUM",
+        img: "https://i.postimg.cc/D42wBwS2/youku.png",
+        variants: [
+          { type: "1 TAHUN (SHARING)", price: "Rp15.000" }
+        ]
+      },
+      {
+        id: 'youtube',
+        name: "YOUTUBE PREMIUM",
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Youtube_logo.png/640px-Youtube_logo.png",
+        variants: [
+          { type: "1 BULAN (PRIVATE)", price: "Rp10.000" },
+          { type: "3 BULAN (PRIVATE)", price: "Rp30.000" }
+        ]
+      },
+      {
+        id: 'bstation',
+        name: "BSTATION PREMIUM",
+        img: "https://i.postimg.cc/VrD69FyF/bstation.png",
+        variants: [
+          { type: "1 TAHUN (SHARING)", price: "Rp20.000" }
+        ]
+      }
     ];
+
+    // Map the productsData to add oldPrice to each variant
+    const products = productsData.map(product => {
+        return {
+            ...product,
+            variants: product.variants.map(variant => ({
+                ...variant,
+                oldPrice: generateOldPrice(variant.price)
+            }))
+        };
+    });
+
+    let currentSelectedProduct = null; // To store the product clicked for modal
 
     function renderProducts(list) {
       const productGrid = document.getElementById("productGrid");
       productGrid.innerHTML = "";
       list.forEach(product => {
         const badgeHtml = product.badge ? `<div class="badge">${product.badge}</div>` : '';
-        const oldPriceHtml = product.oldPrice ? `<div class="old-price">${product.oldPrice}</div>` : '';
 
+        // Untuk kartu produk utama, kita tidak menampilkan harga atau tombol order
+        // Cukup nama produk dan gambar
         productGrid.innerHTML += `
-          <div class="product">
+          <div class="product" onclick="openProductModal('${product.id}')">
             ${badgeHtml}
-            <img src="${product.img}" alt="icon" loading="eager">
+            <img src="${product.img}" alt="${product.name}" loading="eager">
             <div class="product-name">${product.name}</div>
-            <div class="price-container">
-              ${oldPriceHtml}
-              <div class="current-price">${product.price}</div>
-            </div>
-            <a href="https://wa.me/6285166497792?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(product.name)}%20dengan%20harga%20${product.price}" target="_blank" class="order-button">Order</a>
+            <div class="choose-text">Pilih</div>
           </div>
         `;
       });
@@ -549,6 +853,65 @@
     function filterProducts(query) {
       const filtered = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
       renderProducts(filtered);
+    }
+
+    function openProductModal(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      currentSelectedProduct = product; // Simpan produk yang dipilih
+
+      const modal = document.getElementById('productOptionsModal');
+      const modalProductName = document.getElementById('modalProductName');
+      const modalProductOptions = document.getElementById('modalProductOptions');
+
+      modalProductName.textContent = product.name;
+      modalProductOptions.innerHTML = ''; // Clear previous options
+
+      product.variants.forEach(variant => {
+        const oldPriceHtml = variant.oldPrice ? `<div class="modal-option-old-price">${variant.oldPrice}</div>` : '';
+        const optionCard = document.createElement('div');
+        optionCard.classList.add('modal-option-card');
+        optionCard.innerHTML = `
+          <div class="modal-option-info">
+            <div class="modal-option-type">${variant.type}</div>
+            <div class="modal-option-price-container">
+                ${oldPriceHtml}
+                <div class="modal-option-current-price">${variant.price}</div>
+            </div>
+          </div>
+          <button class="modal-order-button" onclick="orderProduct('${product.name} ${variant.type}', '${variant.price}', event)">Order</button>
+        `;
+        modalProductOptions.appendChild(optionCard);
+      });
+
+      modal.style.display = 'flex'; // Show the modal
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('productOptionsModal');
+      modal.style.display = 'none'; // Hide the modal
+      currentSelectedProduct = null; // Reset
+    }
+
+    // Close modal if clicked outside of modal-content
+    window.onclick = function(event) {
+      const modal = document.getElementById('productOptionsModal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+
+    // Prevent modal from closing when clicking inside it, unless it's the close button
+    document.getElementById('productOptionsModal').querySelector('.modal-content').onclick = function(event) {
+        event.stopPropagation();
+    };
+
+    function orderProduct(fullName, price, event) {
+        event.stopPropagation(); // Prevent modal from closing if clicking on button
+        const whatsappUrl = `https://wa.me/6285166497792?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(fullName)}%20dengan%20harga%20${encodeURIComponent(price)}`;
+        window.open(whatsappUrl, '_blank');
+        closeModal(); // Close modal after order
     }
 
     function toggleDarkMode() {
@@ -564,6 +927,7 @@
       if (localStorage.getItem("darkMode") === "enabled") {
         document.body.classList.add("dark");
       }
+      renderProducts(products); // Initial render
     });
 
     function toggleMenu() {
@@ -571,7 +935,17 @@
       menu.classList.toggle("show-menu");
     }
 
-    renderProducts(products);
+    // Ensure menu closes if clicked outside
+    document.addEventListener('click', function(event) {
+        const menu = document.getElementById('menu');
+        const menuButton = document.querySelector('.menu-button');
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            if (menu.classList.contains('show-menu')) {
+                menu.classList.remove('show-menu');
+            }
+        }
+    });
+
   </script>
 </body>
 </html>
